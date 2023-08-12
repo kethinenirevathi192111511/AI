@@ -1,0 +1,35 @@
+% Rules: if condition then conclusion
+rule(flu, [has_fever(X), has_cough(X)]) :- symptom(X, fever), symptom(X, cough).
+rule(cold, [has_runny_nose(X)]) :- symptom(X, runny_nose).
+
+% Symptoms and their associations with patients
+symptom(patient1, fever).
+symptom(patient1, cough).
+symptom(patient2, runny_nose).
+
+% Backward chaining inference
+infer(Disease) :-
+    goal(Disease),
+    check_goal(Disease),
+    write('Inferred '), write(Disease), nl.
+infer(_).
+
+check_goal(Disease) :-
+    rule(Disease, Conditions),
+    all_conditions_satisfied(Conditions).
+
+all_conditions_satisfied([]).
+all_conditions_satisfied([Condition|Rest]) :-
+    check_condition(Condition),
+    all_conditions_satisfied(Rest).
+
+check_condition(Condition) :-
+    Condition.
+
+% Main goal to start inference
+:- initialization(main).
+main :-
+    writeln('Backward Chaining Inference'),
+    infer(Disease),
+    writeln('Inference complete.'),
+    halt.
