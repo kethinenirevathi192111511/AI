@@ -1,0 +1,21 @@
+% Facts: name(Name, DOB)
+name(john, '1990-05-15').
+name(mary, '1985-10-22').
+name(alex, '2001-03-10').
+name(susan, '1978-12-03').
+
+% Query to retrieve DOB by name
+get_dob(Name, DOB) :-
+    name(Name, DOB).
+
+% Query to find all individuals born after a given year
+born_after(Year, Name) :-
+    name(Name, DOB),
+    date_year(DOB, DOBYear),
+    DOBYear > Year.
+
+% Predicate to extract year from a date in 'YYYY-MM-DD' format
+date_year(Date, Year) :-
+    atom_chars(Date, DateChars),
+    append(YearChars, _, DateChars),
+    atom_chars(Year, YearChars).
