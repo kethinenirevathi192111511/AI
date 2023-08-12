@@ -1,0 +1,21 @@
+% Facts: disease(Disease, Description)
+disease(diabetes, 'A metabolic disease where blood sugar levels are consistently high.').
+
+% Facts: suggested_diet(Disease, Diet)
+suggested_diet(diabetes, 'Consume low-carbohydrate foods, high-fiber foods, lean proteins, and avoid sugary drinks.').
+
+% Query to get diet suggestion based on disease
+suggest_diet(Disease, Diet) :-
+    disease(Disease, _),
+    suggested_diet(Disease, Diet),
+    write('For '), write(Disease), write(': '), write(Diet), nl.
+suggest_diet(Disease, 'Diet suggestions not available for this disease.') :-
+    \+ suggested_diet(Disease, _).
+
+% Example queries
+:- initialization(main).
+main :-
+    suggest_diet(diabetes, Diet1),
+    suggest_diet(hypertension, Diet2),
+    suggest_diet(celiac_disease, Diet3),
+    halt.
